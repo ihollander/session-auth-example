@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as client from "../api/client";
 
 function SignUp({ setUser }) {
   const [username, setUsername] = useState("");
@@ -6,7 +7,10 @@ function SignUp({ setUser }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Signing up", { username, password });
+    client
+      .signup({ username, password })
+      .then(setUser)
+      .catch((err) => console.log(err));
   }
 
   return (

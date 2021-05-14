@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as client from "../api/client";
 
 function Login({ setUser }) {
   const [username, setUsername] = useState("");
@@ -6,7 +7,10 @@ function Login({ setUser }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Logging in", { username, password });
+    client
+      .login({ username, password })
+      .then(setUser)
+      .catch((err) => console.log(err));
   }
 
   return (

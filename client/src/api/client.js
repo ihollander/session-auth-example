@@ -1,0 +1,35 @@
+// TODO: refactor reusable fetch code
+
+async function login(formData) {
+  const response = await fetch("/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+  const data = await response.json();
+  if (response.ok) {
+    return data;
+  } else {
+    throw data;
+  }
+}
+
+async function signup(formData) {
+  const response = await fetch("/api/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+  const data = await response.json();
+  if (response.ok) {
+    return data;
+  } else {
+    throw data;
+  }
+}
+
+export { login, signup };
