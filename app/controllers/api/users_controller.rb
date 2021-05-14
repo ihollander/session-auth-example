@@ -5,7 +5,7 @@ module Api
     def create
       user = User.create(create_user_params)
       if user.valid?
-        # TODO: add session
+        session[:user_id] = user.id
         render json: user, status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity

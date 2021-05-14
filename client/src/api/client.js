@@ -3,6 +3,7 @@
 async function login(formData) {
   const response = await fetch("/api/login", {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -19,6 +20,7 @@ async function login(formData) {
 async function signup(formData) {
   const response = await fetch("/api/signup", {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
