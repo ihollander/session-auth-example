@@ -1,7 +1,21 @@
+function getCookie(name) {
+  const cookieValue =
+    document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || "";
+  try {
+    return decodeURIComponent(cookieValue);
+  } catch {
+    return cookieValue;
+  }
+}
+
 async function request(endpoint, options = {}) {
   const response = await fetch(endpoint, {
     ...options,
     credentials: "include",
+    headers: {
+      ...options.headers,
+      "X-CSRF-Token": getCookie("CSRF-TOKEN"),
+    },
   });
   let data;
   // try/catch in case data is not valid JSON (or no content)

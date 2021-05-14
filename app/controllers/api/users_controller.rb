@@ -1,12 +1,14 @@
 module Api
   class UsersController < ApplicationController
     skip_before_action :authenticate, only: :create
+    skip_before_action :verify_authenticity_token, only: :create
 
     # POST /signup
     def create
       user = User.create(create_user_params)
       if user.valid?
         session[:user_id] = user.id
+        set_csrf_token!
         render json: user, status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
