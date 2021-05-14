@@ -1,80 +1,62 @@
-// TODO: refactor reusable fetch code
+async function request(endpoint, options = {}) {
+  const response = await fetch(endpoint, {
+    ...options,
+    credentials: "include",
+  });
+  let data;
+  // try/catch in case data is not valid JSON (or no content)
+  try {
+    data = await response.json();
+  } catch {
+    data = null;
+  }
+  if (response.ok) {
+    // for good status codes, return the parsed data
+    return data;
+  } else {
+    // for bad status codes, throw the data to .catch
+    throw data;
+  }
+}
 
-async function logout() {
-  const response = await fetch("/api/logout", {
+function logout() {
+  return request("/api/logout", {
     method: "DELETE",
-    credentials: "include",
   });
-  const data = response.status !== 204 ? response.json() : null;
-  if (response.ok) {
-    return data;
-  } else {
-    throw data;
-  }
 }
 
-async function login(formData) {
-  const response = await fetch("/api/login", {
+function login(formData) {
+  return request("/api/login", {
     method: "POST",
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(formData),
   });
-  const data = await response.json();
-  if (response.ok) {
-    return data;
-  } else {
-    throw data;
-  }
 }
 
-async function signup(formData) {
-  const response = await fetch("/api/signup", {
+function signup(formData) {
+  return request("/api/signup", {
     method: "POST",
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(formData),
   });
-  const data = await response.json();
-  if (response.ok) {
-    return data;
-  } else {
-    throw data;
-  }
 }
 
-async function me() {
-  const response = await fetch("/api/me", {
-    method: "GET",
-    credentials: "include",
-  });
-  const data = await response.json();
-  if (response.ok) {
-    return data;
-  } else {
-    throw data;
-  }
+function me() {
+  return request("/api/me");
 }
 
-async function updateProfile(formData) {
-  const response = await fetch("/api/me", {
+function updateProfile(formData) {
+  return request("/api/me", {
     method: "PATCH",
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(formData),
   });
-  const data = await response.json();
-  if (response.ok) {
-    return data;
-  } else {
-    throw data;
-  }
 }
 
 export { logout, login, signup, me, updateProfile };
