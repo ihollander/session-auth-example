@@ -12,5 +12,11 @@ module Api
       end
     end
 
+    private
+
+    def create_user_params
+      params.permit(:username, :password)
+    end
+
   end
 end
