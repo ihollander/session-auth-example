@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import * as client from "../api/client";
 
 function Profile({ user, setUser }) {
   const [username, setUsername] = useState(user.username);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Updating profile", { username });
+    client
+      .updateProfile({ username })
+      .then(setUser)
+      .catch((err) => console.log(err));
   }
 
   return (

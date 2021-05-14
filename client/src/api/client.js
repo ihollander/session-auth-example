@@ -47,4 +47,21 @@ async function me() {
   }
 }
 
-export { login, signup, me };
+async function updateProfile(formData) {
+  const response = await fetch("/api/me", {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+  const data = await response.json();
+  if (response.ok) {
+    return data;
+  } else {
+    throw data;
+  }
+}
+
+export { login, signup, me, updateProfile };

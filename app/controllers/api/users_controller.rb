@@ -18,7 +18,21 @@ module Api
       render json: @current_user
     end
 
+    # PATCH /me
+    def update
+      @current_user.update(update_user_params)
+      if @current_user.valid?
+        render json: @current_user
+      else
+        render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+
     private
+
+    def update_user_params
+      params.permit(:username)
+    end
 
     def create_user_params
       params.permit(:username, :password)
