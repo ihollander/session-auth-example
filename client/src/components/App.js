@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import NavBar from "./NavBar";
 import Profile from "./Profile";
+import * as client from "../api/client";
 
 function App() {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // auto-login
+    client.me().then(setUser);
+  }, []);
 
   return (
     <>

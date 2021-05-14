@@ -34,4 +34,17 @@ async function signup(formData) {
   }
 }
 
-export { login, signup };
+async function me() {
+  const response = await fetch("/api/me", {
+    method: "GET",
+    credentials: "include",
+  });
+  const data = await response.json();
+  if (response.ok) {
+    return data;
+  } else {
+    throw data;
+  }
+}
+
+export { login, signup, me };

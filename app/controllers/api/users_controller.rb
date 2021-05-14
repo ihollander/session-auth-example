@@ -1,5 +1,6 @@
 module Api
   class UsersController < ApplicationController
+    skip_before_action :authenticate, only: :create
 
     # POST /signup
     def create
@@ -10,6 +11,11 @@ module Api
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
       end
+    end
+
+    # GET /me
+    def show
+      render json: @current_user
     end
 
     private

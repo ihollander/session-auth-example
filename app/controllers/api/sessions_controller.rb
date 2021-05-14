@@ -1,5 +1,6 @@
 module Api
   class SessionsController < ApplicationController
+    skip_before_action :authenticate, only: :create
 
     # POST /login
     def create
