@@ -11,5 +11,5 @@ npm install --prefix client
 ## Running the App
 
 ```sh
-foreman start -f Procfile.dev
+rake start
 ```
