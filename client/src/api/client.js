@@ -1,5 +1,18 @@
 // TODO: refactor reusable fetch code
 
+async function logout() {
+  const response = await fetch("/api/logout", {
+    method: "DELETE",
+    credentials: "include",
+  });
+  const data = response.status !== 204 ? response.json() : null;
+  if (response.ok) {
+    return data;
+  } else {
+    throw data;
+  }
+}
+
 async function login(formData) {
   const response = await fetch("/api/login", {
     method: "POST",
@@ -64,4 +77,4 @@ async function updateProfile(formData) {
   }
 }
 
-export { login, signup, me, updateProfile };
+export { logout, login, signup, me, updateProfile };

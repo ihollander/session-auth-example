@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import * as client from "../api/client";
 
 function NavBar({ user, setUser }) {
   function handleLogoutClick() {
-    console.log("Logging out");
+    client
+      .logout()
+      .then(() => setUser(null))
+      .catch((err) => console.log(err));
   }
 
   return (
