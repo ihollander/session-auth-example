@@ -6,7 +6,7 @@ function NavBar({ user, setUser }) {
   function handleLogoutClick() {
     client
       .logout()
-      .then(() => setUser(null))
+      .then((d) => console.log(d) || setUser(null))
       .catch((err) => console.log(err));
   }
 

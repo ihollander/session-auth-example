@@ -1,76 +1,27 @@
-function getCookie(name) {
-  const cookieValue =
-    document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || "";
-  try {
-    return decodeURIComponent(cookieValue);
-  } catch {
-    return cookieValue;
-  }
-}
+import axios from "axios";
 
-async function request(endpoint, options = {}) {
-  const response = await fetch(endpoint, {
-    ...options,
-    credentials: "include",
-    headers: {
-      ...options.headers,
-      "X-CSRF-Token": getCookie("CSRF-TOKEN"),
-    },
-  });
-  let data;
-  // try/catch in case data is not valid JSON (or no content)
-  try {
-    data = await response.json();
-  } catch {
-    data = null;
-  }
-  if (response.ok) {
-    // for good status codes, return the parsed data
-    return data;
-  } else {
-    // for bad status codes, throw the data to .catch
-    throw data;
-  }
-}
+axios.defaults.xsrfCookieName = "CSRF-TOKEN";
+axios.defaults.xsrfHeaderName = "X-CSRF-Token";
+axios.defaults.withCredentials = true;
 
 function logout() {
-  return request("/api/logout", {
-    method: "DELETE",
-  });
+  return axios.delete("/api/logout");
 }
 
 function login(formData) {
-  return request("/api/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  });
+  return axios.post("/api/login", formData);
 }
 
 function signup(formData) {
-  return request("/api/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  });
+  return axios.post("/api/signup", formData);
 }
 
 function me() {
-  return request("/api/me");
+  return axios.get("/api/me");
 }
 
 function updateProfile(formData) {
-  return request("/api/me", {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  });
+  return axios.patch("/api/me", formData);
 }
 
 export { logout, login, signup, me, updateProfile };

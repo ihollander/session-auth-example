@@ -9,7 +9,7 @@ function SignUp({ setUser }) {
     e.preventDefault();
     client
       .signup({ username, password })
-      .then(setUser)
+      .then((r) => setUser(r.data))
       .catch((err) => console.log(err));
   }
 

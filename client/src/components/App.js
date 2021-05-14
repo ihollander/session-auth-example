@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     // auto-login
-    client.me().then(setUser);
+    client.me().then((r) => setUser(r.data));
   }, []);
 
   return (

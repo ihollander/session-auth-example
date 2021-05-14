@@ -8,7 +8,7 @@ function Profile({ user, setUser }) {
     e.preventDefault();
     client
       .updateProfile({ username })
-      .then(setUser)
+      .then((r) => setUser(r.data))
       .catch((err) => console.log(err));
   }
 
