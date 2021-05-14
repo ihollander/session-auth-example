@@ -7,4 +7,7 @@ Rails.application.routes.draw do
     get "/me", to: "users#show"
     patch "/me", to: "users#update"
   end
+
+  # fallback for React Router
+  get '*path', to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
